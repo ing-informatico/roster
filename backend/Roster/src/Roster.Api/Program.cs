@@ -1,8 +1,21 @@
+using Microsoft.EntityFrameworkCore;
+using Roster.Infrastructure.Persistence;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
 
+builder.Services.AddDbContext<RosterDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
+
 var app = builder.Build();
+
+// Apply pending EF Core migrations on startup (idempotent schema management).
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<RosterDbContext>();
+    db.Database.Migrate();
+}
 
 if (app.Environment.IsDevelopment())
 {
