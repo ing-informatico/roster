@@ -3,6 +3,7 @@ import { AuthGuard } from './core/auth/AuthGuard';
 import { AppShell } from './shared/layout/AppShell';
 import { EmpleadosPage } from './features/empleados/EmpleadosPage';
 import { EmpleadoFichaPage } from './features/empleados/EmpleadoFichaPage';
+import { CatalogosPage } from './features/catalogos/CatalogosPage';
 
 function App() {
   return (
@@ -22,6 +23,14 @@ function App() {
             element={
               <AppShell activeKey="empleados" title="Ficha del empleado">
                 <EmpleadoFichaPage />
+              </AppShell>
+            }
+          />
+          <Route
+            path="/catalogos"
+            element={
+              <AppShell activeKey="catalogos" title="Catalogos">
+                <CatalogosPage />
               </AppShell>
             }
           />

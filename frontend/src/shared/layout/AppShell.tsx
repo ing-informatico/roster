@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from 'react-oidc-context';
 import { useCurrentUser } from '../../core/auth/useCurrentUser';
 import { useUserRole } from '../../core/auth/useUserRole';
@@ -9,13 +10,15 @@ interface NavItem {
   key: string;
   label: string;
   icon: string;
+  path: string;
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { key: 'dashboard', label: 'Dashboard', icon: '▦' },
-  { key: 'empleados', label: 'Empleados', icon: '👤' },
-  { key: 'importar', label: 'Importar Excel', icon: '⭱' },
-  { key: 'auditoria', label: 'Auditoria', icon: '≡' },
+  { key: 'dashboard', label: 'Dashboard', icon: '▦', path: '/dashboard' },
+  { key: 'empleados', label: 'Empleados', icon: '👤', path: '/empleados' },
+  { key: 'catalogos', label: 'Catalogos', icon: '▤', path: '/catalogos' },
+  { key: 'importar', label: 'Importar Excel', icon: '⭱', path: '/importar' },
+  { key: 'auditoria', label: 'Auditoria', icon: '≡', path: '/auditoria' },
 ];
 
 interface AppShellProps {
@@ -26,6 +29,7 @@ interface AppShellProps {
 
 export function AppShell({ activeKey, title, children }: AppShellProps) {
   const auth = useAuth();
+  const navigate = useNavigate();
   const { displayName, greeting } = useCurrentUser();
   const { role, label: roleLabel } = useUserRole();
 
@@ -41,6 +45,7 @@ export function AppShell({ activeKey, title, children }: AppShellProps) {
             <button
               key={item.key}
               className={`nav-item${item.key === activeKey ? ' active' : ''}`}
+              onClick={() => navigate(item.path)}
             >
               <span className="nav-icon">{item.icon}</span>
               <span>{item.label}</span>
@@ -60,7 +65,13 @@ export function AppShell({ activeKey, title, children }: AppShellProps) {
             <span className="greeting">
               {greeting}, <strong>{displayName}</strong>
             </span>
-            <button className="logout-btn" onClick={() => { void auth.removeUser(); window.location.href = buildCognitoLogoutUrl(); }}>
+            <button
+              className="logout-btn"
+              onClick={() => {
+                void auth.removeUser();
+                window.location.href = buildCognitoLogoutUrl();
+              }}
+            >
               Salir
             </button>
           </div>
