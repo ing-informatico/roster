@@ -11,11 +11,12 @@ builder.Services.AddDbContext<RosterDbContext>(options =>
 
 var app = builder.Build();
 
-// Apply pending EF Core migrations on startup (idempotent schema management).
+// Apply pending EF Core migrations and seed base catalogs on startup (idempotent).
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<RosterDbContext>();
     db.Database.Migrate();
+    await RosterDbSeeder.SeedAsync(db);
 }
 
 if (app.Environment.IsDevelopment())
