@@ -142,3 +142,27 @@
   background: #f7f5ef;
   border-color: #d9d7cf;
 }
+
+.role-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.role-editor {
+  background: var(--teal-soft);
+  color: var(--teal);
+}
+
+.role-consulta {
+  background: var(--blue-soft);
+  color: var(--blue);
+}
+
+.role-unknown {
+  background: #eceae2;
+  color: #6b6b66;
+}

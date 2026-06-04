@@ -6,6 +6,8 @@ using Roster.Infrastructure.Persistence;
 var builder = WebApplication.CreateBuilder(args);
 
 const string FrontendCorsPolicy = "FrontendCorsPolicy";
+const string EditorGroup = "RRHH-Editor";
+const string CanEditPolicy = "CanEdit";
 
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
@@ -24,7 +26,6 @@ builder.Services.AddCors(options =>
 });
 
 // Authentication: validate JWT access tokens issued by the Cognito user pool.
-// Authority and Audience come from configuration (never hardcoded).
 var cognitoAuthority = builder.Configuration["Cognito:Authority"];
 
 builder.Services
@@ -39,10 +40,17 @@ builder.Services
             ValidateAudience = false,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
+            // Cognito stores group membership in the "cognito:groups" claim.
+            RoleClaimType = "cognito:groups",
         };
     });
 
-builder.Services.AddAuthorization();
+// Authorization: editing operations require membership in the Editor group.
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy(CanEditPolicy, policy =>
+        policy.RequireRole(EditorGroup));
+});
 
 var app = builder.Build();
 
@@ -65,7 +73,6 @@ app.UseCors(FrontendCorsPolicy);
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Health check endpoint: public, confirms the API is alive.
 app.MapGet("/health", () => Results.Ok(new
 {
     status = "Healthy",

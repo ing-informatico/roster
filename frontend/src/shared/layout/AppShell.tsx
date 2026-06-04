@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { useAuth } from 'react-oidc-context';
 import { useCurrentUser } from '../../core/auth/useCurrentUser';
+import { useUserRole } from '../../core/auth/useUserRole';
 import { buildCognitoLogoutUrl } from '../../core/config/authConfig';
 import './appShell.css';
 
@@ -26,6 +27,7 @@ interface AppShellProps {
 export function AppShell({ activeKey, title, children }: AppShellProps) {
   const auth = useAuth();
   const { displayName, greeting } = useCurrentUser();
+  const { role, label: roleLabel } = useUserRole();
 
   return (
     <div className="shell">
@@ -54,6 +56,7 @@ export function AppShell({ activeKey, title, children }: AppShellProps) {
             <h2 className="topbar-title">{title}</h2>
           </div>
           <div className="topbar-user">
+            <span className={`role-badge role-${role}`}>{roleLabel}</span>
             <span className="greeting">
               {greeting}, <strong>{displayName}</strong>
             </span>

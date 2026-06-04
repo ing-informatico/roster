@@ -71,7 +71,8 @@ public class EmpleadosController : ControllerBase
         return Ok(empleado);
     }
 
-    /// <summary>Creates a new employee.</summary>
+    /// <summary>Creates a new employee. Requires Editor role.</summary>
+    [Authorize(Policy = "CanEdit")]
     [HttpPost]
     public async Task<ActionResult<EmpleadoListItemDto>> Create(
         [FromBody] CrearEmpleadoDto dto,
@@ -124,7 +125,8 @@ public class EmpleadosController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = empleado.Id }, result);
     }
 
-    /// <summary>Updates an existing employee. Codigo cannot be changed.</summary>
+    /// <summary>Updates an existing employee. Codigo cannot be changed. Requires Editor role.</summary>
+    [Authorize(Policy = "CanEdit")]
     [HttpPut("{id:long}")]
     public async Task<IActionResult> Update(
         long id,
