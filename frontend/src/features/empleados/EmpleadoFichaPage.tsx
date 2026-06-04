@@ -13,6 +13,11 @@ function initials(name: string): string {
     .toUpperCase();
 }
 
+function money(value: number | null, moneda: string): string {
+  if (value === null) return '—';
+  return `${moneda} ${value.toLocaleString('en-US', { minimumFractionDigits: 0 })}`;
+}
+
 interface FieldProps {
   label: string;
   value: string | null | undefined;
@@ -51,7 +56,7 @@ export function EmpleadoFichaPage() {
             <Pill tone={e.activo ? 'green' : 'gray'} label={e.activo ? 'Activo' : 'Inactivo'} />
           </div>
           <div className="fh-sub">
-            #{e.codigo} · {e.departamento ?? '—'}
+            #{e.codigo} · {e.puesto ?? 'Sin puesto'} · {e.departamento ?? '—'}
           </div>
         </div>
         {isEditor && (
@@ -68,6 +73,9 @@ export function EmpleadoFichaPage() {
             <Field label="Nombre completo" value={e.nombreCompleto} />
             <Field label="Fecha de nacimiento" value={e.fechaNacimiento} />
             <Field label="Pais" value={e.pais} />
+            <Field label="Direccion" value={e.direccion} />
+            <Field label="Telefono 1" value={e.telefono1} />
+            <Field label="Telefono 2" value={e.telefono2} />
             <Field label="Correo" value={e.correo} />
           </div>
         </div>
@@ -75,10 +83,30 @@ export function EmpleadoFichaPage() {
         <div className="ficha-card">
           <div className="ficha-card-head">Datos laborales</div>
           <div className="ficha-card-body">
+            <Field label="Puesto actual" value={e.puesto} />
             <Field label="Departamento" value={e.departamento} />
             <Field label="Fecha de ingreso" value={e.fechaIngreso} />
-            <Field label="Codigo" value={`#${e.codigo}`} />
-            <Field label="Estado" value={e.activo ? 'Activo' : 'Inactivo'} />
+            <Field label="Modalidad" value={e.modalidad} />
+            <Field label="Jefe inmediato" value={e.jefeInmediato} />
+            <Field label="Facturable" value={e.facturable ? 'Si (Billable)' : 'No'} />
+          </div>
+        </div>
+
+        <div className="ficha-card">
+          <div className="ficha-card-head">Compensacion</div>
+          <div className="ficha-card-body">
+            <Field label="Salario actual" value={money(e.salarioActual, e.moneda)} />
+            <Field label="Moneda" value={e.moneda} />
+          </div>
+        </div>
+
+        <div className="ficha-card">
+          <div className="ficha-card-head">Historial</div>
+          <div className="ficha-card-body">
+            <p className="ficha-empty">
+              Los historiales de puesto, salario, evaluaciones y bonos se cargaran con la
+              importacion de Excel.
+            </p>
           </div>
         </div>
       </div>

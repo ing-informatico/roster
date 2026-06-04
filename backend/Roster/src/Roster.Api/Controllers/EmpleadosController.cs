@@ -57,11 +57,20 @@ public class EmpleadosController : ControllerBase
                 Codigo = e.Codigo,
                 NombreCompleto = e.NombreCompleto,
                 Correo = e.Correo,
-                FechaIngreso = e.FechaIngreso,
+                Direccion = e.Direccion,
+                Telefono1 = e.Telefono1,
+                Telefono2 = e.Telefono2,
                 FechaNacimiento = e.FechaNacimiento,
+                Puesto = e.Puesto,
+                Modalidad = e.Modalidad,
+                JefeInmediato = e.JefeInmediato,
+                Facturable = e.Facturable,
+                FechaIngreso = e.FechaIngreso,
+                Activo = e.Activo,
+                SalarioActual = e.SalarioActual,
+                Moneda = e.Moneda,
                 Departamento = e.Departamento != null ? e.Departamento.Nombre : null,
-                Pais = e.Pais != null ? e.Pais.Nombre : null,
-                Activo = e.Activo
+                Pais = e.Pais != null ? e.Pais.Nombre : null
             })
             .FirstOrDefaultAsync(cancellationToken);
 
@@ -103,8 +112,17 @@ public class EmpleadosController : ControllerBase
             Codigo = dto.Codigo.Trim(),
             NombreCompleto = dto.NombreCompleto.Trim(),
             Correo = dto.Correo?.Trim(),
-            FechaIngreso = dto.FechaIngreso,
+            Direccion = dto.Direccion?.Trim(),
+            Telefono1 = dto.Telefono1?.Trim(),
+            Telefono2 = dto.Telefono2?.Trim(),
             FechaNacimiento = dto.FechaNacimiento,
+            Puesto = dto.Puesto?.Trim(),
+            Modalidad = dto.Modalidad?.Trim(),
+            JefeInmediato = dto.JefeInmediato?.Trim(),
+            Facturable = dto.Facturable,
+            FechaIngreso = dto.FechaIngreso,
+            SalarioActual = dto.SalarioActual,
+            Moneda = string.IsNullOrWhiteSpace(dto.Moneda) ? "USD" : dto.Moneda.Trim(),
             PaisId = dto.PaisId,
             DepartamentoId = dto.DepartamentoId,
             Activo = true
@@ -150,8 +168,17 @@ public class EmpleadosController : ControllerBase
 
         empleado.NombreCompleto = dto.NombreCompleto.Trim();
         empleado.Correo = dto.Correo?.Trim();
-        empleado.FechaIngreso = dto.FechaIngreso;
+        empleado.Direccion = dto.Direccion?.Trim();
+        empleado.Telefono1 = dto.Telefono1?.Trim();
+        empleado.Telefono2 = dto.Telefono2?.Trim();
         empleado.FechaNacimiento = dto.FechaNacimiento;
+        empleado.Puesto = dto.Puesto?.Trim();
+        empleado.Modalidad = dto.Modalidad?.Trim();
+        empleado.JefeInmediato = dto.JefeInmediato?.Trim();
+        empleado.Facturable = dto.Facturable;
+        empleado.FechaIngreso = dto.FechaIngreso;
+        empleado.SalarioActual = dto.SalarioActual;
+        empleado.Moneda = string.IsNullOrWhiteSpace(dto.Moneda) ? "USD" : dto.Moneda.Trim();
         empleado.PaisId = dto.PaisId;
         empleado.DepartamentoId = dto.DepartamentoId;
         empleado.Activo = dto.Activo;
