@@ -105,3 +105,40 @@
   max-width: 1240px;
   width: 100%;
 }
+
+.topbar {
+  justify-content: space-between;
+}
+
+.topbar-user {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.greeting {
+  font-size: 13.5px;
+  color: var(--muted);
+}
+
+.greeting strong {
+  color: var(--ink);
+}
+
+.logout-btn {
+  padding: 8px 16px;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.15s;
+  font-family: inherit;
+}
+
+.logout-btn:hover {
+  background: #f7f5ef;
+  border-color: #d9d7cf;
+}

@@ -1,11 +1,14 @@
+import { AuthGuard } from './core/auth/AuthGuard';
 import { AppShell } from './shared/layout/AppShell';
 import { EmpleadosPage } from './features/empleados/EmpleadosPage';
 
 function App() {
   return (
-    <AppShell activeKey="empleados" title="Empleados">
-      <EmpleadosPage />
-    </AppShell>
+    <AuthGuard>
+      <AppShell activeKey="empleados" title="Empleados">
+        <EmpleadosPage />
+      </AppShell>
+    </AuthGuard>
   );
 }
 
