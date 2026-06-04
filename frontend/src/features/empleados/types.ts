@@ -28,3 +28,22 @@ export interface EmpleadoDetalle {
   departamento: string | null;
   pais: string | null;
 }
+
+export interface EmpleadoFormData {
+  nombreCompleto: string;
+  correo: string;
+  direccion: string;
+  telefono1: string;
+  telefono2: string;
+  fechaNacimiento: string;
+  puesto: string;
+  modalidad: string;
+  jefeInmediato: string;
+  facturable: boolean;
+  fechaIngreso: string;
+  salarioActual: string;
+  moneda: string;
+  paisId: string;
+  departamentoId: string;
+  activo: boolean;
+}
