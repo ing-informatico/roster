@@ -4,6 +4,7 @@ using Roster.Infrastructure.Persistence;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
+builder.Services.AddControllers();
 
 builder.Services.AddDbContext<RosterDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
@@ -32,5 +33,7 @@ app.MapGet("/health", () => Results.Ok(new
     timestamp = DateTime.UtcNow
 }))
 .WithName("HealthCheck");
+
+app.MapControllers();
 
 app.Run();
