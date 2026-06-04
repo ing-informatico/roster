@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Roster.Application.Empleados;
@@ -6,6 +7,7 @@ using Roster.Infrastructure.Persistence;
 
 namespace Roster.Api.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/empleados")]
 public class EmpleadosController : ControllerBase

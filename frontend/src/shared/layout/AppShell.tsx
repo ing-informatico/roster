@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { useAuth } from 'react-oidc-context';
 import { useCurrentUser } from '../../core/auth/useCurrentUser';
+import { buildCognitoLogoutUrl } from '../../core/config/authConfig';
 import './appShell.css';
 
 interface NavItem {
@@ -56,7 +57,7 @@ export function AppShell({ activeKey, title, children }: AppShellProps) {
             <span className="greeting">
               {greeting}, <strong>{displayName}</strong>
             </span>
-            <button className="logout-btn" onClick={() => void auth.removeUser()}>
+            <button className="logout-btn" onClick={() => { void auth.removeUser(); window.location.href = buildCognitoLogoutUrl(); }}>
               Salir
             </button>
           </div>

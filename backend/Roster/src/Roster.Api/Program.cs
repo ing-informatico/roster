@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Roster.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +13,6 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<RosterDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
 
-// CORS: allow the React dev server to call the API.
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(FrontendCorsPolicy, policy =>
@@ -22,9 +23,29 @@ builder.Services.AddCors(options =>
     });
 });
 
+// Authentication: validate JWT access tokens issued by the Cognito user pool.
+// Authority and Audience come from configuration (never hardcoded).
+var cognitoAuthority = builder.Configuration["Cognito:Authority"];
+
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.Authority = cognitoAuthority;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = cognitoAuthority,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+        };
+    });
+
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
-// Apply pending EF Core migrations and seed base catalogs on startup (idempotent).
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<RosterDbContext>();
@@ -41,7 +62,10 @@ app.UseHttpsRedirection();
 
 app.UseCors(FrontendCorsPolicy);
 
-// Health check endpoint: confirms the API is alive.
+app.UseAuthentication();
+app.UseAuthorization();
+
+// Health check endpoint: public, confirms the API is alive.
 app.MapGet("/health", () => Results.Ok(new
 {
     status = "Healthy",
