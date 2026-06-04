@@ -40,13 +40,41 @@ public class EmpleadosController : ControllerBase
         return Ok(empleados);
     }
 
+    /// <summary>Returns a single employee by id.</summary>
+    [HttpGet("{id:long}")]
+    public async Task<ActionResult<EmpleadoDetalleDto>> GetById(
+        long id,
+        CancellationToken cancellationToken)
+    {
+        var empleado = await _db.Empleados
+            .AsNoTracking()
+            .Where(e => e.Id == id)
+            .Select(e => new EmpleadoDetalleDto
+            {
+                Id = e.Id,
+                Codigo = e.Codigo,
+                NombreCompleto = e.NombreCompleto,
+                Correo = e.Correo,
+                FechaIngreso = e.FechaIngreso,
+                FechaNacimiento = e.FechaNacimiento,
+                Departamento = e.Departamento != null ? e.Departamento.Nombre : null,
+                Pais = e.Pais != null ? e.Pais.Nombre : null,
+                Activo = e.Activo
+            })
+            .FirstOrDefaultAsync(cancellationToken);
+
+        if (empleado is null)
+            return NotFound();
+
+        return Ok(empleado);
+    }
+
     /// <summary>Creates a new employee.</summary>
     [HttpPost]
     public async Task<ActionResult<EmpleadoListItemDto>> Create(
         [FromBody] CrearEmpleadoDto dto,
         CancellationToken cancellationToken)
     {
-        // Server-side validation (source of truth).
         if (string.IsNullOrWhiteSpace(dto.Codigo))
             ModelState.AddModelError(nameof(dto.Codigo), "El codigo es obligatorio.");
 
@@ -91,6 +119,6 @@ public class EmpleadosController : ControllerBase
             Activo = empleado.Activo
         };
 
-        return CreatedAtAction(nameof(GetAll), new { id = empleado.Id }, result);
+        return CreatedAtAction(nameof(GetById), new { id = empleado.Id }, result);
     }
 }
