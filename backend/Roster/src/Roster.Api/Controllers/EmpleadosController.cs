@@ -121,4 +121,39 @@ public class EmpleadosController : ControllerBase
 
         return CreatedAtAction(nameof(GetById), new { id = empleado.Id }, result);
     }
+
+    /// <summary>Updates an existing employee. Codigo cannot be changed.</summary>
+    [HttpPut("{id:long}")]
+    public async Task<IActionResult> Update(
+        long id,
+        [FromBody] ActualizarEmpleadoDto dto,
+        CancellationToken cancellationToken)
+    {
+        var empleado = await _db.Empleados
+            .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
+
+        if (empleado is null)
+            return NotFound();
+
+        if (string.IsNullOrWhiteSpace(dto.NombreCompleto) || dto.NombreCompleto.Trim().Length < 5)
+            ModelState.AddModelError(nameof(dto.NombreCompleto), "El nombre es obligatorio (minimo 5 caracteres).");
+
+        if (!string.IsNullOrWhiteSpace(dto.Correo) && !dto.Correo.Contains('@'))
+            ModelState.AddModelError(nameof(dto.Correo), "El correo no es valido.");
+
+        if (!ModelState.IsValid)
+            return ValidationProblem(ModelState);
+
+        empleado.NombreCompleto = dto.NombreCompleto.Trim();
+        empleado.Correo = dto.Correo?.Trim();
+        empleado.FechaIngreso = dto.FechaIngreso;
+        empleado.FechaNacimiento = dto.FechaNacimiento;
+        empleado.PaisId = dto.PaisId;
+        empleado.DepartamentoId = dto.DepartamentoId;
+        empleado.Activo = dto.Activo;
+
+        await _db.SaveChangesAsync(cancellationToken);
+
+        return NoContent();
+    }
 }
