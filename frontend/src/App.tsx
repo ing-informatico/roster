@@ -1,10 +1,7 @@
+import { EmpleadosPage } from './features/empleados/EmpleadosPage';
+
 function App() {
-  return (
-    <div>
-      <h1>Roster</h1>
-      <p>Frontend base ready.</p>
-    </div>
-  );
+  return <EmpleadosPage />;
 }
 
 export default App;
