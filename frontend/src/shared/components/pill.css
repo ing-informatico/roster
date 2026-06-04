@@ -1,0 +1,28 @@
+.pill {
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.pill-green {
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.pill-gray {
+  background: #eceae2;
+  color: #6b6b66;
+}
+
+.pill-blue {
+  background: var(--blue-soft);
+  color: var(--blue);
+}
+
+.pill-amber {
+  background: var(--amber-soft);
+  color: var(--amber);
+}
