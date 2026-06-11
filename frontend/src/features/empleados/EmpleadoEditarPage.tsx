@@ -11,27 +11,41 @@ import './empleadoEditar.css';
 const MODALIDADES = ['WFH', 'Hibrido', 'Presencial'];
 
 function buildInitialForm(
-  empleado: EmpleadoDetalle,
+  e: EmpleadoDetalle,
   departamentos: CatalogoItem[],
   paises: CatalogoItem[],
 ): EmpleadoFormData {
   return {
-    nombreCompleto: empleado.nombreCompleto,
-    correo: empleado.correo ?? '',
-    direccion: empleado.direccion ?? '',
-    telefono1: empleado.telefono1 ?? '',
-    telefono2: empleado.telefono2 ?? '',
-    fechaNacimiento: empleado.fechaNacimiento ?? '',
-    puesto: empleado.puesto ?? '',
-    modalidad: empleado.modalidad ?? '',
-    jefeInmediato: empleado.jefeInmediato ?? '',
-    facturable: empleado.facturable,
-    fechaIngreso: empleado.fechaIngreso ?? '',
-    salarioActual: empleado.salarioActual?.toString() ?? '',
-    moneda: empleado.moneda ?? 'USD',
-    paisId: paises.find((p) => p.nombre === empleado.pais)?.id.toString() ?? '',
-    departamentoId: departamentos.find((d) => d.nombre === empleado.departamento)?.id.toString() ?? '',
-    activo: empleado.activo,
+    nombreCompleto: e.nombreCompleto,
+    genero: e.genero ?? '',
+    correo: e.correo ?? '',
+    direccion: e.direccion ?? '',
+    telefono1: e.telefono1 ?? '',
+    fechaNacimiento: e.fechaNacimiento ?? '',
+    padreOMadre: e.padreOMadre ?? '',
+    puesto: e.puesto ?? '',
+    modalidad: e.modalidad ?? '',
+    modalidadCompensacion: e.modalidadCompensacion ?? '',
+    site: e.site ?? '',
+    jefeInmediato: e.jefeInmediato ?? '',
+    teamLead: e.teamLead ?? '',
+    sdm: e.sdm ?? '',
+    manager: e.manager ?? '',
+    facturable: e.facturable,
+    fechaIngreso: e.fechaIngreso ?? '',
+    centroCosto: e.centroCosto ?? '',
+    idCentroCosto: e.idCentroCosto ?? '',
+    centroCostoUbicacion: e.centroCostoUbicacion ?? '',
+    proyecto: e.proyecto ?? '',
+    equipoAsignado: e.equipoAsignado ?? '',
+    idObsPoliza: e.idObsPoliza ?? '',
+    tipoSeguro: e.tipoSeguro ?? '',
+    idBeneficioHospAngeles: e.idBeneficioHospAngeles ?? '',
+    salarioActual: e.salarioActual?.toString() ?? '',
+    moneda: e.moneda ?? 'USD',
+    paisId: paises.find((p) => p.nombre === e.pais)?.id.toString() ?? '',
+    departamentoId: departamentos.find((d) => d.nombre === e.departamento)?.id.toString() ?? '',
+    activo: e.activo,
   };
 }
 
@@ -70,16 +84,30 @@ function EmpleadoForm({ empleadoId, initial, departamentos, paises }: FormProps)
     try {
       await actualizar.mutateAsync({
         nombreCompleto: form.nombreCompleto.trim(),
+        genero: form.genero.trim() || null,
         correo: form.correo.trim() || null,
         direccion: form.direccion.trim() || null,
         telefono1: form.telefono1.trim() || null,
-        telefono2: form.telefono2.trim() || null,
         fechaNacimiento: form.fechaNacimiento || null,
+        padreOMadre: form.padreOMadre.trim() || null,
         puesto: form.puesto.trim() || null,
         modalidad: form.modalidad || null,
+        modalidadCompensacion: form.modalidadCompensacion.trim() || null,
+        site: form.site.trim() || null,
         jefeInmediato: form.jefeInmediato.trim() || null,
+        teamLead: form.teamLead.trim() || null,
+        sdm: form.sdm.trim() || null,
+        manager: form.manager.trim() || null,
         facturable: form.facturable,
         fechaIngreso: form.fechaIngreso || null,
+        centroCosto: form.centroCosto.trim() || null,
+        idCentroCosto: form.idCentroCosto.trim() || null,
+        centroCostoUbicacion: form.centroCostoUbicacion.trim() || null,
+        proyecto: form.proyecto.trim() || null,
+        equipoAsignado: form.equipoAsignado.trim() || null,
+        idObsPoliza: form.idObsPoliza.trim() || null,
+        tipoSeguro: form.tipoSeguro.trim() || null,
+        idBeneficioHospAngeles: form.idBeneficioHospAngeles.trim() || null,
         salarioActual: form.salarioActual ? Number(form.salarioActual) : null,
         moneda: form.moneda || 'USD',
         paisId: form.paisId ? Number(form.paisId) : null,
@@ -92,96 +120,118 @@ function EmpleadoForm({ empleadoId, initial, departamentos, paises }: FormProps)
     }
   }
 
+  const txt = (key: keyof EmpleadoFormData, label: string) => (
+    <div className="form-field">
+      <label>{label}</label>
+      <input value={form[key] as string} onChange={(e) => set(key, e.target.value as never)} />
+    </div>
+  );
+
   return (
     <div className="emp-form">
       <button className="btn-ghost" onClick={() => navigate(`/empleados/${empleadoId}`)}>
         ‹ Cancelar
       </button>
 
-      <div className="form-card">
-        <div className="form-card-head">Editar empleado</div>
+      <div className="form-card-head">Editar empleado</div>
+
+      <div className="form-section-card">
+        <div className="form-section">Datos personales</div>
         <div className="form-grid">
           <div className="form-field full">
             <label>Nombre completo *</label>
             <input value={form.nombreCompleto} onChange={(e) => set('nombreCompleto', e.target.value)} />
             {errors.nombreCompleto && <span className="form-err">{errors.nombreCompleto}</span>}
           </div>
-
+          {txt('genero', 'Genero')}
           <div className="form-field">
             <label>Correo corporativo</label>
             <input value={form.correo} onChange={(e) => set('correo', e.target.value)} />
             {errors.correo && <span className="form-err">{errors.correo}</span>}
           </div>
-          <div className="form-field">
-            <label>Puesto</label>
-            <input value={form.puesto} onChange={(e) => set('puesto', e.target.value)} />
-          </div>
-
-          <div className="form-field">
-            <label>Departamento</label>
-            <select value={form.departamentoId} onChange={(e) => set('departamentoId', e.target.value)}>
-              <option value="">— Seleccionar —</option>
-              {departamentos.map((d) => (
-                <option key={d.id} value={d.id}>{d.nombre}</option>
-              ))}
-            </select>
-          </div>
-          <div className="form-field">
-            <label>Pais</label>
-            <select value={form.paisId} onChange={(e) => set('paisId', e.target.value)}>
-              <option value="">— Seleccionar —</option>
-              {paises.map((p) => (
-                <option key={p.id} value={p.id}>{p.nombre}</option>
-              ))}
-            </select>
-          </div>
-
-          <div className="form-field">
-            <label>Modalidad</label>
-            <select value={form.modalidad} onChange={(e) => set('modalidad', e.target.value)}>
-              <option value="">— Seleccionar —</option>
-              {MODALIDADES.map((m) => (
-                <option key={m} value={m}>{m}</option>
-              ))}
-            </select>
-          </div>
-          <div className="form-field">
-            <label>Jefe inmediato</label>
-            <input value={form.jefeInmediato} onChange={(e) => set('jefeInmediato', e.target.value)} />
-          </div>
-
-          <div className="form-field">
-            <label>Direccion</label>
-            <input value={form.direccion} onChange={(e) => set('direccion', e.target.value)} />
-          </div>
-          <div className="form-field">
-            <label>Telefono 1</label>
-            <input value={form.telefono1} onChange={(e) => set('telefono1', e.target.value)} />
-          </div>
-          <div className="form-field">
-            <label>Telefono 2</label>
-            <input value={form.telefono2} onChange={(e) => set('telefono2', e.target.value)} />
-          </div>
-
-          <div className="form-field">
-            <label>Fecha de ingreso</label>
-            <input type="date" value={form.fechaIngreso} onChange={(e) => set('fechaIngreso', e.target.value)} />
-          </div>
+          {txt('direccion', 'Direccion')}
+          {txt('telefono1', 'Telefono 1')}
           <div className="form-field">
             <label>Fecha de nacimiento</label>
             <input type="date" value={form.fechaNacimiento} onChange={(e) => set('fechaNacimiento', e.target.value)} />
           </div>
+          {txt('padreOMadre', 'Padre o Madre')}
+          <div className="form-field">
+            <label>Pais</label>
+            <select value={form.paisId} onChange={(e) => set('paisId', e.target.value)}>
+              <option value="">— Seleccionar —</option>
+              {paises.map((p) => (<option key={p.id} value={p.id}>{p.nombre}</option>))}
+            </select>
+          </div>
+        </div>
+      </div>
 
+      <div className="form-section-card">
+        <div className="form-section">Datos laborales</div>
+        <div className="form-grid">
+          {txt('puesto', 'Puesto')}
+          <div className="form-field">
+            <label>Departamento</label>
+            <select value={form.departamentoId} onChange={(e) => set('departamentoId', e.target.value)}>
+              <option value="">— Seleccionar —</option>
+              {departamentos.map((d) => (<option key={d.id} value={d.id}>{d.nombre}</option>))}
+            </select>
+          </div>
+          <div className="form-field">
+            <label>Modalidad</label>
+            <select value={form.modalidad} onChange={(e) => set('modalidad', e.target.value)}>
+              <option value="">— Seleccionar —</option>
+              {MODALIDADES.map((m) => (<option key={m} value={m}>{m}</option>))}
+            </select>
+          </div>
+          {txt('modalidadCompensacion', 'Modalidad compensacion')}
+          {txt('site', 'Site')}
+          <div className="form-field">
+            <label>Fecha de ingreso</label>
+            <input type="date" value={form.fechaIngreso} onChange={(e) => set('fechaIngreso', e.target.value)} />
+          </div>
+        </div>
+      </div>
+
+      <div className="form-section-card">
+        <div className="form-section">Organizacion</div>
+        <div className="form-grid">
+          {txt('jefeInmediato', 'Jefe inmediato')}
+          {txt('teamLead', 'Team Lead')}
+          {txt('sdm', 'SDM')}
+          {txt('manager', 'Manager')}
+        </div>
+      </div>
+
+      <div className="form-section-card">
+        <div className="form-section">Centro de costo y proyecto</div>
+        <div className="form-grid">
+          {txt('centroCosto', 'Centro de costo')}
+          {txt('idCentroCosto', 'ID centro de costo')}
+          {txt('centroCostoUbicacion', 'Ubicacion')}
+          {txt('proyecto', 'Proyecto')}
+          {txt('equipoAsignado', 'Equipo asignado')}
+        </div>
+      </div>
+
+      <div className="form-section-card">
+        <div className="form-section">Seguro y beneficios</div>
+        <div className="form-grid">
+          {txt('idObsPoliza', 'ID - OBS / Poliza')}
+          {txt('tipoSeguro', 'Tipo de seguro')}
+          {txt('idBeneficioHospAngeles', 'Beneficio Hosp. Angeles')}
+        </div>
+      </div>
+
+      <div className="form-section-card">
+        <div className="form-section">Compensacion</div>
+        <div className="form-grid">
           <div className="form-field">
             <label>Salario actual</label>
             <input value={form.salarioActual} onChange={(e) => set('salarioActual', e.target.value)} />
             {errors.salarioActual && <span className="form-err">{errors.salarioActual}</span>}
           </div>
-          <div className="form-field">
-            <label>Moneda</label>
-            <input value={form.moneda} onChange={(e) => set('moneda', e.target.value)} />
-          </div>
-
+          {txt('moneda', 'Moneda')}
           <div className="form-field full">
             <label>Opciones</label>
             <div className="form-checks">
@@ -196,13 +246,13 @@ function EmpleadoForm({ empleadoId, initial, departamentos, paises }: FormProps)
             </div>
           </div>
         </div>
+      </div>
 
-        {saveError && <p className="form-err form-err-foot">{saveError}</p>}
+      {saveError && <p className="form-err form-err-foot">{saveError}</p>}
 
-        <div className="form-foot">
-          <button className="btn-ghost" onClick={() => navigate(`/empleados/${empleadoId}`)}>Cancelar</button>
-          <button className="btn-primary" onClick={() => void submit()}>Guardar cambios</button>
-        </div>
+      <div className="form-foot">
+        <button className="btn-ghost" onClick={() => navigate(`/empleados/${empleadoId}`)}>Cancelar</button>
+        <button className="btn-primary" onClick={() => void submit()}>Guardar cambios</button>
       </div>
     </div>
   );
@@ -223,11 +273,6 @@ export function EmpleadoEditarPage() {
   const initial = buildInitialForm(empleado, departamentos, paises);
 
   return (
-    <EmpleadoForm
-      empleadoId={numericId}
-      initial={initial}
-      departamentos={departamentos}
-      paises={paises}
-    />
+    <EmpleadoForm empleadoId={numericId} initial={initial} departamentos={departamentos} paises={paises} />
   );
 }

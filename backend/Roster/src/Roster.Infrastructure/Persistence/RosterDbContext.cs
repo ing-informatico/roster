@@ -53,12 +53,26 @@ public class RosterDbContext : DbContext
             entity.Property(e => e.Correo).HasMaxLength(150);
             entity.HasIndex(e => e.Correo).IsUnique();
 
+            entity.Property(e => e.Genero).HasMaxLength(20);
+            entity.Property(e => e.ModalidadCompensacion).HasMaxLength(40);
             entity.Property(e => e.Direccion).HasMaxLength(250);
             entity.Property(e => e.Telefono1).HasMaxLength(40);
-            entity.Property(e => e.Telefono2).HasMaxLength(40);
+            entity.Property(e => e.CentroCosto).HasMaxLength(120);
+            entity.Property(e => e.IdCentroCosto).HasMaxLength(40);
+            entity.Property(e => e.CentroCostoUbicacion).HasMaxLength(120);
+            entity.Property(e => e.Proyecto).HasMaxLength(120);
             entity.Property(e => e.Puesto).HasMaxLength(120);
             entity.Property(e => e.Modalidad).HasMaxLength(40);
+            entity.Property(e => e.Site).HasMaxLength(60);
             entity.Property(e => e.JefeInmediato).HasMaxLength(150);
+            entity.Property(e => e.TeamLead).HasMaxLength(150);
+            entity.Property(e => e.Sdm).HasMaxLength(150);
+            entity.Property(e => e.Manager).HasMaxLength(150);
+            entity.Property(e => e.IdObsPoliza).HasMaxLength(120);
+            entity.Property(e => e.TipoSeguro).HasMaxLength(120);
+            entity.Property(e => e.IdBeneficioHospAngeles).HasMaxLength(120);
+            entity.Property(e => e.PadreOMadre).HasMaxLength(20);
+            entity.Property(e => e.EquipoAsignado).HasMaxLength(200);
             entity.Property(e => e.SalarioActual).HasColumnType("numeric(12,2)");
             entity.Property(e => e.Moneda).HasMaxLength(3).HasDefaultValue("USD");
             entity.Property(e => e.Activo).HasDefaultValue(true);

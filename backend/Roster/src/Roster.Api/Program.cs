@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Roster.Infrastructure.Importacion;
 using Roster.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,7 @@ const string CanEditPolicy = "CanEdit";
 
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
+builder.Services.AddScoped<ExcelEmpleadoImporter>();
 
 builder.Services.AddDbContext<RosterDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));

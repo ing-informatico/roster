@@ -71,12 +71,13 @@ export function EmpleadoFichaPage() {
           <div className="ficha-card-head">Datos personales</div>
           <div className="ficha-card-body">
             <Field label="Nombre completo" value={e.nombreCompleto} />
+            <Field label="Genero" value={e.genero} />
             <Field label="Fecha de nacimiento" value={e.fechaNacimiento} />
             <Field label="Pais" value={e.pais} />
             <Field label="Direccion" value={e.direccion} />
             <Field label="Telefono 1" value={e.telefono1} />
-            <Field label="Telefono 2" value={e.telefono2} />
             <Field label="Correo" value={e.correo} />
+            <Field label="Padre o Madre" value={e.padreOMadre} />
           </div>
         </div>
 
@@ -87,8 +88,39 @@ export function EmpleadoFichaPage() {
             <Field label="Departamento" value={e.departamento} />
             <Field label="Fecha de ingreso" value={e.fechaIngreso} />
             <Field label="Modalidad" value={e.modalidad} />
-            <Field label="Jefe inmediato" value={e.jefeInmediato} />
+            <Field label="Modalidad compensacion" value={e.modalidadCompensacion} />
+            <Field label="Site" value={e.site} />
             <Field label="Facturable" value={e.facturable ? 'Si (Billable)' : 'No'} />
+          </div>
+        </div>
+
+        <div className="ficha-card">
+          <div className="ficha-card-head">Organizacion</div>
+          <div className="ficha-card-body">
+            <Field label="Jefe inmediato" value={e.jefeInmediato} />
+            <Field label="Team Lead" value={e.teamLead} />
+            <Field label="SDM" value={e.sdm} />
+            <Field label="Manager" value={e.manager} />
+          </div>
+        </div>
+
+        <div className="ficha-card">
+          <div className="ficha-card-head">Centro de costo y proyecto</div>
+          <div className="ficha-card-body">
+            <Field label="Centro de costo" value={e.centroCosto} />
+            <Field label="ID centro de costo" value={e.idCentroCosto} />
+            <Field label="Ubicacion" value={e.centroCostoUbicacion} />
+            <Field label="Proyecto" value={e.proyecto} />
+            <Field label="Equipo asignado" value={e.equipoAsignado} />
+          </div>
+        </div>
+
+        <div className="ficha-card">
+          <div className="ficha-card-head">Seguro y beneficios</div>
+          <div className="ficha-card-body">
+            <Field label="ID - OBS / Poliza" value={e.idObsPoliza} />
+            <Field label="Tipo de seguro" value={e.tipoSeguro} />
+            <Field label="Beneficio Hosp. Angeles" value={e.idBeneficioHospAngeles} />
           </div>
         </div>
 
@@ -99,15 +131,15 @@ export function EmpleadoFichaPage() {
             <Field label="Moneda" value={e.moneda} />
           </div>
         </div>
+      </div>
 
-        <div className="ficha-card">
-          <div className="ficha-card-head">Historial</div>
-          <div className="ficha-card-body">
-            <p className="ficha-empty">
-              Los historiales de puesto, salario, evaluaciones y bonos se cargaran con la
-              importacion de Excel.
-            </p>
-          </div>
+      <div className="ficha-card">
+        <div className="ficha-card-head">Historial</div>
+        <div className="ficha-card-body">
+          <p className="ficha-empty">
+            Los historiales de puesto, salario, evaluaciones y bonos se cargaran en una fase
+            posterior.
+          </p>
         </div>
       </div>
     </div>

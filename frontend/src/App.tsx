@@ -5,6 +5,7 @@ import { EmpleadosPage } from './features/empleados/EmpleadosPage';
 import { EmpleadoFichaPage } from './features/empleados/EmpleadoFichaPage';
 import { EmpleadoEditarPage } from './features/empleados/EmpleadoEditarPage';
 import { CatalogosPage } from './features/catalogos/CatalogosPage';
+import { ImportarPage } from './features/importacion/ImportarPage';
 
 function App() {
   return (
@@ -40,6 +41,14 @@ function App() {
             element={
               <AppShell activeKey="empleados" title="Editar empleado">
                 <EmpleadoEditarPage />
+              </AppShell>
+            }
+          />
+          <Route
+            path="/importar"
+            element={
+              <AppShell activeKey="importar" title="Importar Excel">
+                <ImportarPage />
               </AppShell>
             }
           />

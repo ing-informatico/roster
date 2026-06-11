@@ -54,19 +54,34 @@ public class EmpleadosController : ControllerBase
             .Select(e => new EmpleadoDetalleDto
             {
                 Id = e.Id,
+                NumeroFila = e.NumeroFila,
                 Codigo = e.Codigo,
                 NombreCompleto = e.NombreCompleto,
+                Genero = e.Genero,
                 Correo = e.Correo,
                 Direccion = e.Direccion,
                 Telefono1 = e.Telefono1,
-                Telefono2 = e.Telefono2,
                 FechaNacimiento = e.FechaNacimiento,
+                PadreOMadre = e.PadreOMadre,
                 Puesto = e.Puesto,
                 Modalidad = e.Modalidad,
+                ModalidadCompensacion = e.ModalidadCompensacion,
+                Site = e.Site,
                 JefeInmediato = e.JefeInmediato,
+                TeamLead = e.TeamLead,
+                Sdm = e.Sdm,
+                Manager = e.Manager,
                 Facturable = e.Facturable,
                 FechaIngreso = e.FechaIngreso,
                 Activo = e.Activo,
+                CentroCosto = e.CentroCosto,
+                IdCentroCosto = e.IdCentroCosto,
+                CentroCostoUbicacion = e.CentroCostoUbicacion,
+                Proyecto = e.Proyecto,
+                EquipoAsignado = e.EquipoAsignado,
+                IdObsPoliza = e.IdObsPoliza,
+                TipoSeguro = e.TipoSeguro,
+                IdBeneficioHospAngeles = e.IdBeneficioHospAngeles,
                 SalarioActual = e.SalarioActual,
                 Moneda = e.Moneda,
                 Departamento = e.Departamento != null ? e.Departamento.Nombre : null,
@@ -114,7 +129,6 @@ public class EmpleadosController : ControllerBase
             Correo = dto.Correo?.Trim(),
             Direccion = dto.Direccion?.Trim(),
             Telefono1 = dto.Telefono1?.Trim(),
-            Telefono2 = dto.Telefono2?.Trim(),
             FechaNacimiento = dto.FechaNacimiento,
             Puesto = dto.Puesto?.Trim(),
             Modalidad = dto.Modalidad?.Trim(),
@@ -166,17 +180,32 @@ public class EmpleadosController : ControllerBase
         if (!ModelState.IsValid)
             return ValidationProblem(ModelState);
 
+        Console.WriteLine($"[PUT-DEBUG] Genero={dto.Genero} Manager={dto.Manager} CentroCosto={dto.CentroCosto} Proyecto={dto.Proyecto} Site={dto.Site}");
         empleado.NombreCompleto = dto.NombreCompleto.Trim();
+        empleado.Genero = dto.Genero?.Trim();
         empleado.Correo = dto.Correo?.Trim();
         empleado.Direccion = dto.Direccion?.Trim();
         empleado.Telefono1 = dto.Telefono1?.Trim();
-        empleado.Telefono2 = dto.Telefono2?.Trim();
         empleado.FechaNacimiento = dto.FechaNacimiento;
+        empleado.PadreOMadre = dto.PadreOMadre?.Trim();
         empleado.Puesto = dto.Puesto?.Trim();
         empleado.Modalidad = dto.Modalidad?.Trim();
+        empleado.ModalidadCompensacion = dto.ModalidadCompensacion?.Trim();
+        empleado.Site = dto.Site?.Trim();
         empleado.JefeInmediato = dto.JefeInmediato?.Trim();
+        empleado.TeamLead = dto.TeamLead?.Trim();
+        empleado.Sdm = dto.Sdm?.Trim();
+        empleado.Manager = dto.Manager?.Trim();
         empleado.Facturable = dto.Facturable;
         empleado.FechaIngreso = dto.FechaIngreso;
+        empleado.CentroCosto = dto.CentroCosto?.Trim();
+        empleado.IdCentroCosto = dto.IdCentroCosto?.Trim();
+        empleado.CentroCostoUbicacion = dto.CentroCostoUbicacion?.Trim();
+        empleado.Proyecto = dto.Proyecto?.Trim();
+        empleado.EquipoAsignado = dto.EquipoAsignado?.Trim();
+        empleado.IdObsPoliza = dto.IdObsPoliza?.Trim();
+        empleado.TipoSeguro = dto.TipoSeguro?.Trim();
+        empleado.IdBeneficioHospAngeles = dto.IdBeneficioHospAngeles?.Trim();
         empleado.SalarioActual = dto.SalarioActual;
         empleado.Moneda = string.IsNullOrWhiteSpace(dto.Moneda) ? "USD" : dto.Moneda.Trim();
         empleado.PaisId = dto.PaisId;

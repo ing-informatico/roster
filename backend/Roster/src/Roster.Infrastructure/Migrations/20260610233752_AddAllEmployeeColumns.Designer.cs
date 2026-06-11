@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Roster.Infrastructure.Persistence;
@@ -11,9 +12,11 @@ using Roster.Infrastructure.Persistence;
 namespace Roster.Infrastructure.Migrations
 {
     [DbContext(typeof(RosterDbContext))]
-    partial class RosterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260610233752_AddAllEmployeeColumns")]
+    partial class AddAllEmployeeColumns
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -172,6 +175,10 @@ namespace Roster.Infrastructure.Migrations
                         .HasColumnType("character varying(150)");
 
                     b.Property<string>("Telefono1")
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)");
+
+                    b.Property<string>("Telefono2")
                         .HasMaxLength(40)
                         .HasColumnType("character varying(40)");
 

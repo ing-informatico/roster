@@ -8,7 +8,6 @@ public class CrearEmpleadoDto
     public string? Correo { get; set; }
     public string? Direccion { get; set; }
     public string? Telefono1 { get; set; }
-    public string? Telefono2 { get; set; }
     public DateOnly? FechaNacimiento { get; set; }
     public string? Puesto { get; set; }
     public string? Modalidad { get; set; }

@@ -1,0 +1,156 @@
+.import-page {
+  max-width: 760px;
+}
+
+.import-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.import-card-head {
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--line);
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.import-card-body {
+  padding: 22px 20px;
+}
+
+.dropzone {
+  border: 2px dashed #c9d6e3;
+  border-radius: 14px;
+  padding: 34px;
+  text-align: center;
+  background: #f6f9fc;
+  cursor: pointer;
+  transition: 0.15s;
+}
+
+.dropzone:hover {
+  border-color: var(--teal);
+  background: #f1f9f6;
+}
+
+.dropzone-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  background: #fff;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 14px;
+  color: var(--teal);
+  box-shadow: var(--shadow);
+  font-size: 22px;
+}
+
+.dropzone-title {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.dropzone-sub {
+  color: var(--muted);
+  margin-top: 5px;
+  font-size: 13px;
+}
+
+.import-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 18px;
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.import-error {
+  color: var(--red);
+  font-size: 13px;
+  margin-top: 14px;
+}
+
+.import-result {
+  margin-top: 22px;
+}
+
+.result-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.sum-box {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 16px;
+  text-align: center;
+}
+
+.sum-box.ok {
+  border-color: #c7e3d4;
+  background: #f1f9f6;
+}
+
+.sum-box.info {
+  border-color: #c5dcf0;
+  background: #f0f6fc;
+}
+
+.sum-box.warn {
+  border-color: #eccaca;
+  background: #fdf4f4;
+}
+
+.sum-n {
+  font-size: 26px;
+  font-weight: 800;
+}
+
+.sum-l {
+  font-size: 12.5px;
+  color: var(--muted);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.error-list {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 18px;
+}
+
+.error-head {
+  background: #fafaf6;
+  padding: 10px 14px;
+  font-weight: 700;
+  font-size: 12.5px;
+  color: #54524c;
+  border-bottom: 1px solid var(--line);
+}
+
+.error-item {
+  display: flex;
+  gap: 12px;
+  padding: 9px 14px;
+  border-bottom: 1px solid #f0eee6;
+  font-size: 13px;
+}
+
+.error-item:last-child {
+  border-bottom: none;
+}
+
+.error-fila {
+  font-weight: 700;
+  color: var(--red);
+  flex: 0 0 64px;
+}
